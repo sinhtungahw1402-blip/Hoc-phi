@@ -734,6 +734,78 @@
     </div>
   </div>
 
+  <!-- ========================================== -->
+  <!-- MODAL: GỬI NHẮC HỌC PHÍ QUA ZALO / SMS -->
+  <!-- ========================================== -->
+  <div id="modalReminder" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 modal-backdrop">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+        <div>
+          <h3 class="text-base font-bold text-slate-800" id="reminderStudentTitle">Nhắc học phí qua Zalo / SMS</h3>
+          <p class="text-xs text-slate-500" id="reminderStudentSub">Học sinh</p>
+        </div>
+        <button class="btn-close-modal p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Phone number field -->
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <label class="text-xs font-semibold text-slate-600">Số điện thoại phụ huynh (Zalo)</label>
+          <span class="text-[10px] text-slate-400">Tự động lưu khi gửi</span>
+        </div>
+        <div class="relative">
+          <input id="reminderPhoneInput" type="tel" placeholder="Nhập SĐT phụ huynh (VD: 0988xxxxxx)" class="w-full text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+      </div>
+
+      <!-- Message content textarea -->
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <label class="text-xs font-semibold text-slate-600">Nội dung tin nhắn (Có thể sửa trực tiếp)</label>
+          <button id="btnResetReminderMsg" type="button" class="text-[11px] text-indigo-600 hover:underline font-medium">Khôi phục mẫu</button>
+        </div>
+        <textarea id="reminderMessageText" rows="6" class="w-full text-xs border border-slate-200 rounded-xl p-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 leading-relaxed font-normal resize-none"></textarea>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="space-y-2 pt-1">
+        <!-- Zalo Button -->
+        <button id="btnSendZalo" type="button" class="w-full py-3 bg-[#0068ff] hover:bg-[#0055d4] active:scale-98 transition text-white font-bold text-xs rounded-xl shadow-md shadow-blue-200 flex items-center justify-center gap-2">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 48 48">
+            <path d="M24 4C12.95 4 4 12.5 4 23c0 5.86 2.82 11.12 7.29 14.63-.4 3.01-1.6 7.4-1.68 7.69-.16.59.34 1.12.89.92 3.86-1.4 8.74-3.47 11.33-4.59 1.13.23 2.3.35 3.5.35 11.05 0 20-8.5 20-19S35.05 4 24 4z"/>
+          </svg>
+          <span>Nhắn tin qua Zalo (Tự động mở Zalo)</span>
+        </button>
+
+        <div class="grid grid-cols-2 gap-2">
+          <!-- SMS Button -->
+          <button id="btnSendSMS" type="button" class="py-2.5 bg-slate-100 hover:bg-slate-200 active:scale-98 transition text-slate-700 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 border border-slate-200">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+            </svg>
+            <span>Gửi qua SMS</span>
+          </button>
+
+          <!-- Copy Button -->
+          <button id="btnCopyReminderText" type="button" class="py-2.5 bg-slate-100 hover:bg-slate-200 active:scale-98 transition text-slate-700 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 border border-slate-200">
+            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <span>Sao chép tin nhắn</span>
+          </button>
+        </div>
+      </div>
+      
+      <p class="text-[10px] text-slate-400 text-center italic">
+        * Khi bấm "Nhắn tin qua Zalo", hệ thống sẽ tự động sao chép tin nhắn và mở thẳng Zalo của phụ huynh. Bạn chỉ cần bấm "Dán" (Paste) và gửi!
+      </p>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-slate-900/90 backdrop-blur-md text-white text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
     <span id="toastIcon">✓</span>
@@ -1686,28 +1758,102 @@
     }
 
     // --- REMINDER LOGIC (SMS / ZALO) ---
+    let currentReminderStudent = null;
+
+    function buildDefaultReminderMsg(student) {
+      const pay = getPaymentRecord(student.id);
+      const bank = state.settings.bankCode || 'MB';
+      const acc = state.settings.bankAcc || '0988xxxx';
+      const owner = state.settings.bankOwner || 'NGUYEN VAN A';
+      
+      let feeAmount = student.defaultFee || 0;
+      let statusDesc = '';
+      if (pay.status === 'partial') {
+        const remaining = (student.defaultFee || 0) - (pay.amount || 0);
+        feeAmount = remaining;
+        statusDesc = ` (còn thiếu ${formatMoney(remaining)})`;
+      }
+
+      return `Kính gửi phụ huynh em ${student.name},\nXin thông báo học phí tháng ${state.selectedMonth}/${state.selectedYear} của em là ${formatMoney(feeAmount)}${statusDesc}.\nQuý phụ huynh vui lòng thanh toán học phí qua STK:\n- Ngân hàng: ${bank}\n- Số tài khoản: ${acc}\n- Chủ tài khoản: ${owner}\n- Nội dung CK: HP T${state.selectedMonth} ${student.name}\nTrân trọng cảm ơn quý phụ huynh!`;
+    }
+
     function sendReminder(studentId) {
       const student = state.students.find(s => s.id === studentId);
       if (!student) return;
+      currentReminderStudent = student;
 
-      const bank = state.settings.bankCode || 'MB';
-      const acc = state.settings.bankAcc || '0988123456';
-      const owner = state.settings.bankOwner || 'NGUYEN VAN A';
-      const fee = formatMoney(student.defaultFee);
-      const phone = student.phone || '';
+      document.getElementById('reminderStudentTitle').textContent = `Nhắc học phí: ${student.name}`;
+      document.getElementById('reminderStudentSub').textContent = `${student.class} • Học phí tháng ${state.selectedMonth}/${state.selectedYear}`;
+      document.getElementById('reminderPhoneInput').value = student.phone || '';
+      document.getElementById('reminderMessageText').value = buildDefaultReminderMsg(student);
 
-      const msg = `Kính gửi phụ huynh em ${student.name}, thông báo học phí tháng ${state.selectedMonth}/${state.selectedYear} của em là ${fee}. Phụ huynh vui lòng gửi học phí qua STK: ${acc} - ${bank} (${owner}). Nội dung CK: HP T${state.selectedMonth} ${student.name}. Cảm ơn quý phụ huynh!`;
+      document.getElementById('modalReminder').classList.remove('hidden');
+    }
 
-      if (phone) {
-        // Option to open SMS directly
-        const smsUrl = `sms:${phone}?body=${encodeURIComponent(msg)}`;
-        window.location.href = smsUrl;
-      } else {
-        // Copy to clipboard
-        navigator.clipboard.writeText(msg).then(() => {
-          showToast(`Đã sao chép tin nhắn nhắc học phí cho ${student.name}! Mở Zalo để dán và gửi.`);
-        });
+    function handleSendZalo() {
+      if (!currentReminderStudent) return;
+      const phone = document.getElementById('reminderPhoneInput').value.trim();
+      const msg = document.getElementById('reminderMessageText').value.trim();
+
+      if (!msg) {
+        alert('Vui lòng nhập nội dung tin nhắn!');
+        return;
       }
+
+      // Auto save phone to student if changed
+      if (phone && phone !== currentReminderStudent.phone) {
+        currentReminderStudent.phone = phone;
+        saveData();
+        renderAll();
+      }
+
+      // Copy message to clipboard
+      navigator.clipboard.writeText(msg).then(() => {
+        let cleanPhone = phone.replace(/[^0-9]/g, '');
+        if (cleanPhone.startsWith('84') && cleanPhone.length >= 10) {
+          cleanPhone = '0' + cleanPhone.slice(2);
+        }
+
+        if (cleanPhone) {
+          showToast('Đã chép tin nhắn! Đang chuyển sang Zalo phụ huynh...', 'success');
+          setTimeout(() => {
+            window.location.href = `https://zalo.me/${cleanPhone}`;
+          }, 400);
+        } else {
+          showToast('Đã chép tin nhắn! Bạn có thể dán vào nhóm Zalo lớp.', 'info');
+          setTimeout(() => {
+            window.location.href = `https://zalo.me`;
+          }, 400);
+        }
+      }).catch(() => {
+        let cleanPhone = phone.replace(/[^0-9]/g, '');
+        if (cleanPhone) {
+          window.location.href = `https://zalo.me/${cleanPhone}`;
+        }
+      });
+    }
+
+    function handleSendSMS() {
+      const phone = document.getElementById('reminderPhoneInput').value.trim();
+      const msg = document.getElementById('reminderMessageText').value.trim();
+      if (!phone) {
+        alert('Vui lòng nhập số điện thoại phụ huynh để gửi SMS!');
+        return;
+      }
+      if (currentReminderStudent && phone !== currentReminderStudent.phone) {
+        currentReminderStudent.phone = phone;
+        saveData();
+        renderAll();
+      }
+      const cleanPhone = phone.replace(/[^0-9+]/g, '');
+      window.location.href = `sms:${cleanPhone}?body=${encodeURIComponent(msg)}`;
+    }
+
+    function handleCopyReminder() {
+      const msg = document.getElementById('reminderMessageText').value.trim();
+      navigator.clipboard.writeText(msg).then(() => {
+        showToast('Đã sao chép nội dung tin nhắn vào bộ nhớ tạm!');
+      });
     }
 
     // --- EXPORT & BACKUP FUNCTIONS ---
@@ -1958,6 +2104,17 @@
         navigator.clipboard.writeText(acc).then(() => {
           showToast(`Đã chép số tài khoản: ${acc}`);
         });
+      };
+
+      // Reminder Modal Actions (Zalo / SMS / Copy / Reset)
+      document.getElementById('btnSendZalo').onclick = handleSendZalo;
+      document.getElementById('btnSendSMS').onclick = handleSendSMS;
+      document.getElementById('btnCopyReminderText').onclick = handleCopyReminder;
+      document.getElementById('btnResetReminderMsg').onclick = () => {
+        if (currentReminderStudent) {
+          document.getElementById('reminderMessageText').value = buildDefaultReminderMsg(currentReminderStudent);
+          showToast('Đã khôi phục nội dung tin nhắn mẫu');
+        }
       };
     }
 

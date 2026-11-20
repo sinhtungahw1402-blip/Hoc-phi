@@ -1032,9 +1032,12 @@
 
     function getInitials(name) {
       if (!name) return 'HS';
-      const parts = name.trim().split(/\s+/);
+      const parts = String(name).trim().split(/\s+/).filter(Boolean);
+      if (parts.length === 0) return 'HS';
       if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
-      return (parts[parts.length - 2][0] + parts[parts.length - 1][0]).toUpperCase();
+      const p1 = parts[parts.length - 2] || '';
+      const p2 = parts[parts.length - 1] || '';
+      return ((p1[0] || '') + (p2[0] || '')).toUpperCase() || 'HS';
     }
 
     function formatMoney(amount) {
@@ -1062,19 +1065,54 @@
     function loadData() {
       try {
         const storedStudents = localStorage.getItem(STORAGE_KEY_STUDENTS);
+        if (storedStudents) {
+          try {
+            const parsed = JSON.parse(storedStudents);
+            if (Array.isArray(parsed)) state.students = parsed;
+          } catch (e) {
+            console.error('Lỗi đọc dữ liệu học sinh:', e);
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi localStorage học sinh:', err);
+      }
+
+      try {
         const storedPayments = localStorage.getItem(STORAGE_KEY_PAYMENTS);
+        if (storedPayments) {
+          try {
+            const parsed = JSON.parse(storedPayments);
+            if (parsed && typeof parsed === 'object') state.payments = parsed;
+          } catch (e) {
+            console.error('Lỗi đọc dữ liệu đóng tiền:', e);
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi localStorage đóng tiền:', err);
+      }
+
+      try {
         const storedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
+        if (storedSettings) {
+          try {
+            const parsed = JSON.parse(storedSettings);
+            if (parsed && typeof parsed === 'object') Object.assign(state.settings, parsed);
+          } catch (e) {
+            console.error('Lỗi đọc cài đặt:', e);
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi localStorage cài đặt:', err);
+      }
 
-        if (storedStudents) state.students = JSON.parse(storedStudents);
-        if (storedPayments) state.payments = JSON.parse(storedPayments);
-        if (storedSettings) state.settings = Object.assign(state.settings, JSON.parse(storedSettings));
-
-        // If completely empty, seed demo data automatically so user has a great first impression
-        if (!storedStudents || state.students.length === 0) {
+      // Chỉ nạp dữ liệu mẫu nếu chưa từng có dữ liệu học sinh trong máy
+      try {
+        const isFresh = localStorage.getItem(STORAGE_KEY_STUDENTS) === null;
+        if (isFresh && state.students.length === 0) {
           seedSampleData(false);
         }
       } catch (err) {
-        console.error('Error loading data', err);
+        console.error('Lỗi nạp dữ liệu mẫu ban đầu:', err);
       }
     }
 
@@ -1135,12 +1173,12 @@
 
     // --- RENDER FUNCTIONS ---
     function renderAll() {
-      renderHeader();
-      renderClassChips();
-      renderFeesView();
-      renderStudentsView();
-      renderReportsView();
-      renderSettingsView();
+      try { renderHeader(); } catch (e) { console.error('renderHeader error:', e); }
+      try { renderClassChips(); } catch (e) { console.error('renderClassChips error:', e); }
+      try { renderFeesView(); } catch (e) { console.error('renderFeesView error:', e); }
+      try { renderStudentsView(); } catch (e) { console.error('renderStudentsView error:', e); }
+      try { renderReportsView(); } catch (e) { console.error('renderReportsView error:', e); }
+      try { renderSettingsView(); } catch (e) { console.error('renderSettingsView error:', e); }
     }
 
     function renderHeader() {
@@ -1402,8 +1440,6 @@
         const pay = getPaymentRecord(student.id);
         const isPaid = pay.status === 'paid';
         const isPartial = pay.status === 'partial';
-        const avatarBg = getAvatarColor(student.name);
-        const initials = getInitials(student.name);
 
         let statusBadgeHtml = '';
         if (isPaid) {
@@ -3055,18 +3091,26 @@
     // --- SERVICE WORKER REGISTRATION (OFFLINE SUPPORT) ---
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          reg.update();
+        }).catch(err => {
           console.log('SW registration failed: ', err);
         });
       });
     }
 
     // App Startup
-    document.addEventListener('DOMContentLoaded', () => {
-      loadData();
-      renderAll();
-      setupEventListeners();
-    });
+    function initApp() {
+      try { loadData(); } catch (e) { console.error('loadData error:', e); }
+      try { setupEventListeners(); } catch (e) { console.error('setupEventListeners error:', e); }
+      try { renderAll(); } catch (e) { console.error('renderAll error:', e); }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
   </script>
 </body>
 </html>

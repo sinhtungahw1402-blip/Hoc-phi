@@ -1,4 +1,4 @@
-const CACHE_NAME = 'edufree-v3';
+const CACHE_NAME = 'edufree-v4';
 const ASSETS = [
   './',
   './index.html',

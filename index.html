@@ -173,6 +173,25 @@
         </div>
       </div>
 
+      <!-- Quick Attendance & Zalo Action Banner -->
+      <div class="flex items-center justify-between bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl p-3 text-white shadow-sm shadow-amber-200">
+        <div class="flex items-center space-x-2.5 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="truncate">
+            <h3 class="text-xs font-bold leading-tight truncate">Điểm danh học sinh vắng</h3>
+            <p class="text-[10px] text-amber-100 opacity-95 truncate">Chọn ngày, lớp & gửi Zalo cho phụ huynh</p>
+          </div>
+        </div>
+        <button id="btnOpenAttendanceBanner" class="px-3 py-1.5 bg-white hover:bg-amber-50 active:scale-95 text-amber-800 font-bold text-xs rounded-xl shadow-sm transition shrink-0 flex items-center gap-1 ml-2">
+          <span>Điểm danh</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
       <!-- Class Filter Chips (Horizontal Scroll) -->
       <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-1" id="classChipsContainer">
         <!-- Rendered by JS: [Tất cả] [Lớp 9A] [Lớp 10A1] ... -->
@@ -234,12 +253,20 @@
           <h2 class="text-base font-bold text-slate-800">Danh sách học sinh</h2>
           <p id="totalStudentsCount" class="text-xs text-slate-500">Tổng cộng: 0 học sinh</p>
         </div>
-        <button id="btnAddNewStudent" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md shadow-indigo-200">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
-          </svg>
-          Thêm học sinh
-        </button>
+        <div class="flex items-center space-x-1.5">
+          <button id="btnOpenAttendanceFromStudents" class="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 active:scale-95 transition text-xs font-bold rounded-xl flex items-center gap-1.5 border border-amber-200">
+            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+            Điểm danh
+          </button>
+          <button id="btnAddNewStudent" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md shadow-indigo-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            Thêm học sinh
+          </button>
+        </div>
       </div>
 
       <!-- Class Filter Chips for Student Directory -->
@@ -365,6 +392,56 @@
 
         <button id="btnSaveSettings" class="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-sm">
           Lưu thông tin cài đặt
+        </button>
+      </div>
+
+      <!-- Absent Notification Message Template Config -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 space-y-3">
+        <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+          <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">Mẫu tin nhắn Zalo báo vắng học</h3>
+            <p class="text-[10px] text-slate-400">Tùy chỉnh nội dung tin nhắn gửi phụ huynh khi học sinh vắng</p>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-slate-500 font-medium">Nội dung mẫu chung</label>
+              <button id="btnResetAbsentTemplate" type="button" class="text-[11px] text-indigo-600 hover:underline font-medium">
+                Khôi phục mẫu chuẩn
+              </button>
+            </div>
+            <textarea id="settingAbsentTemplate" rows="4" class="w-full border border-slate-200 rounded-xl p-2.5 text-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed resize-none"></textarea>
+          </div>
+
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/60 text-[11px] text-slate-500 space-y-1">
+            <p class="font-bold text-slate-700">Các từ khóa tự động thay thế:</p>
+            <div class="flex flex-wrap gap-1 text-[10px]">
+              <span class="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-indigo-700">{ten_hs}</span>: Tên học sinh
+              <span class="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-indigo-700">{ngay}</span>: Ngày vắng
+              <span class="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-indigo-700">{lop}</span>: Lớp học
+              <span class="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-indigo-700">{giao_vien}</span>: Tên thầy/cô
+              <span class="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-indigo-700">{sdt_gv}</span>: SĐT thầy/cô
+            </div>
+          </div>
+
+          <!-- Live Preview -->
+          <div>
+            <label class="block text-slate-500 font-medium mb-1">Xem trước tin nhắn thực tế:</label>
+            <div id="absentTemplatePreview" class="p-2.5 bg-amber-50/50 rounded-xl border border-amber-200/60 text-xs text-slate-700 italic leading-relaxed">
+              ...
+            </div>
+          </div>
+        </div>
+
+        <button id="btnSaveAbsentTemplate" class="w-full py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold transition shadow-sm">
+          Lưu mẫu tin nhắn báo vắng
         </button>
       </div>
 
@@ -979,6 +1056,155 @@
       </p>
     </div>
   </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ĐIỂM DANH HỌC SINH VẮNG -->
+  <!-- ========================================== -->
+  <div id="modalAttendance" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 modal-backdrop">
+    <div class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3.5 max-h-[92vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800">Điểm danh học sinh vắng</h3>
+            <p class="text-[11px] text-slate-400">Chọn học sinh vắng học & gửi Zalo phụ huynh</p>
+          </div>
+        </div>
+        <button class="btn-close-modal p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Filters: Ngày & Lớp -->
+      <div class="grid grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-2xl border border-slate-200/80 shrink-0 text-xs">
+        <div>
+          <label class="block text-[11px] font-bold text-slate-600 mb-1">📅 Ngày điểm danh</label>
+          <input id="attendanceDateInput" type="date" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-600 mb-1">🏫 Chọn lớp</label>
+          <select id="attendanceClassSelect" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Quick Search & Select All Controls -->
+      <div class="space-y-1.5 shrink-0">
+        <div class="relative">
+          <input id="attendanceSearchInput" type="text" placeholder="Tìm nhanh tên học sinh..." class="w-full bg-slate-100 border border-slate-200 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white transition">
+          <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+
+        <div class="flex items-center justify-between text-xs px-0.5">
+          <div class="flex items-center gap-2">
+            <button id="btnAttendanceSelectAll" type="button" class="text-[11px] font-semibold text-indigo-600 hover:text-indigo-800 hover:underline">
+              Chọn tất cả
+            </button>
+            <span class="text-slate-300">•</span>
+            <button id="btnAttendanceDeselectAll" type="button" class="text-[11px] font-semibold text-slate-500 hover:text-slate-700 hover:underline">
+              Bỏ chọn
+            </button>
+          </div>
+          <span id="attendanceCountBadge" class="text-[11px] font-bold text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
+            Đã chọn vắng: 0 học sinh
+          </span>
+        </div>
+      </div>
+
+      <!-- Student Selection List (Scrollable) -->
+      <div id="attendanceStudentList" class="flex-1 overflow-y-auto space-y-1.5 pr-1 min-h-[170px] max-h-[36vh]">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Attendance Actions Bottom Area -->
+      <div class="border-t border-slate-100 pt-2.5 space-y-2 shrink-0">
+        <!-- Main Actions Row -->
+        <div class="grid grid-cols-2 gap-2">
+          <!-- Button: Open Zalo Batch Sender -->
+          <button id="btnStartSendAbsentZalo" type="button" class="w-full py-2.5 bg-[#0068ff] hover:bg-[#0055d4] active:scale-95 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-200 flex items-center justify-center gap-1.5 transition">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 48 48"><path d="M24 4C12.95 4 4 12.5 4 23c0 5.86 2.82 11.12 7.29 14.63-.4 3.01-1.6 7.4-1.68 7.69-.16.59.34 1.12.89.92 3.86-1.4 8.74-3.47 11.33-4.59 1.13.23 2.3.35 3.5.35 11.05 0 20-8.5 20-19S35.05 4 24 4z"/></svg>
+            <span>Gửi Zalo phụ huynh</span>
+          </button>
+
+          <!-- Button: Copy Summary for Class Group Chat -->
+          <button id="btnCopyClassAbsentSummary" type="button" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-200 flex items-center justify-center gap-1.5 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span>Chép gửi Nhóm Lớp</span>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between text-[11px] text-slate-400">
+          <span class="italic">* Nhấn vào dòng học sinh để đánh dấu vắng</span>
+          <button id="btnSaveAttendanceOnly" type="button" class="text-indigo-600 font-semibold hover:underline">
+            💾 Lưu kết quả điểm danh
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: GỬI ZALO PHỤ HUYNH HỌC SINH VẮNG -->
+  <!-- ========================================== -->
+  <div id="modalAbsentZaloQueue" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 modal-backdrop">
+    <div class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3.5 max-h-[92vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-blue-50 text-[#0068ff] flex items-center justify-center">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 48 48"><path d="M24 4C12.95 4 4 12.5 4 23c0 5.86 2.82 11.12 7.29 14.63-.4 3.01-1.6 7.4-1.68 7.69-.16.59.34 1.12.89.92 3.86-1.4 8.74-3.47 11.33-4.59 1.13.23 2.3.35 3.5.35 11.05 0 20-8.5 20-19S35.05 4 24 4z"/></svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800" id="absentQueueHeaderTitle">Gửi Zalo phụ huynh</h3>
+            <p class="text-[11px] text-slate-400" id="absentQueueSubTitle">Ngày: ...</p>
+          </div>
+        </div>
+        <button class="btn-close-modal p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Sequential Auto-Next Button Banner -->
+      <div class="bg-blue-50/70 p-3 rounded-2xl border border-blue-200/80 shrink-0 space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-blue-900" id="absentQueueProgressText">Tiến độ gửi: 0/0 phụ huynh</span>
+          <span class="text-[10px] text-blue-600 font-medium">Bấm gửi lần lượt bên dưới</span>
+        </div>
+        <button id="btnSendNextAbsentZalo" type="button" class="w-full py-2.5 bg-[#0068ff] hover:bg-[#0055d4] active:scale-95 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-200 flex items-center justify-center gap-1.5 transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <span id="btnSendNextAbsentZaloLabel">🚀 Gửi Zalo phụ huynh tiếp theo</span>
+        </button>
+      </div>
+
+      <!-- List of Absent Students Queue -->
+      <div id="absentQueueList" class="flex-1 overflow-y-auto space-y-2.5 pr-1 min-h-[180px] max-h-[40vh]">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="border-t border-slate-100 pt-2.5 flex items-center justify-between shrink-0">
+        <button id="btnBackToAttendance" type="button" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>Quay lại điểm danh</span>
+        </button>
+
+        <button id="btnQueueCopyGroup" type="button" class="text-xs text-emerald-600 font-semibold hover:underline flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          <span>Chép gửi Nhóm Lớp</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
   <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-slate-900/90 backdrop-blur-md text-white text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
     <span id="toastIcon">✓</span>
     <span id="toastMessage">Thông báo</span>
@@ -992,6 +1218,9 @@
     const STORAGE_KEY_STUDENTS = 'edufree_students';
     const STORAGE_KEY_PAYMENTS = 'edufree_payments';
     const STORAGE_KEY_SETTINGS = 'edufree_settings';
+    const STORAGE_KEY_ATTENDANCE = 'edufree_attendance';
+
+    const DEFAULT_ABSENT_MSG_TEMPLATE = 'Kính gửi phụ huynh em {ten_hs}, hôm nay ngày {ngay} em vắng mặt tại buổi học {lop}. Kính báo để gia đình nắm thông tin và phối hợp nhắc nhở em hoàn thành bài tập. Trân trọng! - {giao_vien}';
 
     const now = new Date();
     const state = {
@@ -1003,12 +1232,19 @@
       searchQuery: '',
       students: [],
       payments: {}, // Key: `${studentId}_${year}_${month}`
+      attendance: {}, // Key: 'YYYY-MM-DD', Value: ['hs_1', 'hs_2']
+      attendanceSelectedIds: new Set(),
+      attendanceDate: '',
+      attendanceClass: 'all',
+      attendanceSearchQuery: '',
+      absentSentMap: {},
       settings: {
         teacherName: 'Lớp Thầy Minh',
         phone: '0988123456',
         bankCode: 'MB',
         bankAcc: '0988123456',
-        bankOwner: 'NGUYEN VAN MINH'
+        bankOwner: 'NGUYEN VAN MINH',
+        absentMsgTemplate: DEFAULT_ABSENT_MSG_TEMPLATE
       }
     };
 
@@ -1105,6 +1341,20 @@
         console.error('Lỗi localStorage cài đặt:', err);
       }
 
+      try {
+        const storedAttendance = localStorage.getItem(STORAGE_KEY_ATTENDANCE);
+        if (storedAttendance) {
+          try {
+            const parsed = JSON.parse(storedAttendance);
+            if (parsed && typeof parsed === 'object') state.attendance = parsed;
+          } catch (e) {
+            console.error('Lỗi đọc điểm danh:', e);
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi localStorage điểm danh:', err);
+      }
+
       // Chỉ nạp dữ liệu mẫu nếu chưa từng có dữ liệu học sinh trong máy
       try {
         const isFresh = localStorage.getItem(STORAGE_KEY_STUDENTS) === null;
@@ -1121,6 +1371,7 @@
         localStorage.setItem(STORAGE_KEY_STUDENTS, JSON.stringify(state.students));
         localStorage.setItem(STORAGE_KEY_PAYMENTS, JSON.stringify(state.payments));
         localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(state.settings));
+        localStorage.setItem(STORAGE_KEY_ATTENDANCE, JSON.stringify(state.attendance));
       } catch (err) {
         console.error('Error saving data', err);
       }
@@ -1779,6 +2030,31 @@
       document.getElementById('settingBankCode').value = state.settings.bankCode || 'MB';
       document.getElementById('settingBankAcc').value = state.settings.bankAcc || '';
       document.getElementById('settingBankOwner').value = state.settings.bankOwner || '';
+
+      const tplInput = document.getElementById('settingAbsentTemplate');
+      if (tplInput) {
+        tplInput.value = state.settings.absentMsgTemplate || DEFAULT_ABSENT_MSG_TEMPLATE;
+        updateAbsentTemplatePreview();
+      }
+    }
+
+    function updateAbsentTemplatePreview() {
+      const previewEl = document.getElementById('absentTemplatePreview');
+      const tplInput = document.getElementById('settingAbsentTemplate');
+      if (!previewEl || !tplInput) return;
+      const tpl = tplInput.value.trim() || DEFAULT_ABSENT_MSG_TEMPLATE;
+      const demoStudent = state.students[0] || { name: 'Nguyễn Văn An', class: 'Lớp 9A' };
+      const teacher = (document.getElementById('settingTeacherName') ? document.getElementById('settingTeacherName').value.trim() : '') || state.settings.teacherName || 'Thầy Minh';
+      const phone = (document.getElementById('settingPhone') ? document.getElementById('settingPhone').value.trim() : '') || state.settings.phone || '0988xxxxxx';
+      
+      const rendered = tpl
+        .replace(/{ten_hs}/g, demoStudent.name)
+        .replace(/{ngay}/g, formatVnDate(getTodayIsoString()))
+        .replace(/{lop}/g, demoStudent.class || 'Lớp 9A')
+        .replace(/{giao_vien}/g, teacher)
+        .replace(/{sdt_gv}/g, phone);
+
+      previewEl.textContent = rendered;
     }
 
     // --- TAB SWITCHING ---
@@ -2885,6 +3161,379 @@
       });
     }
 
+    // --- ATTENDANCE & ABSENT ZALO NOTIFICATION ---
+    function getTodayIsoString() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function formatVnDate(dateStr) {
+      if (!dateStr) return '';
+      if (dateStr.includes('-')) {
+        const parts = dateStr.split('-');
+        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      }
+      return dateStr;
+    }
+
+    function buildAbsentMessage(student, dateStr) {
+      const template = state.settings.absentMsgTemplate || DEFAULT_ABSENT_MSG_TEMPLATE;
+      const teacher = state.settings.teacherName || 'Thầy/Cô';
+      const phone = state.settings.phone || '';
+      const formattedDate = formatVnDate(dateStr);
+
+      return template
+        .replace(/{ten_hs}/g, student.name || 'Học sinh')
+        .replace(/{ngay}/g, formattedDate)
+        .replace(/{lop}/g, student.class || 'Lớp học')
+        .replace(/{giao_vien}/g, teacher)
+        .replace(/{sdt_gv}/g, phone);
+    }
+
+    function buildClassGroupAbsentSummary(students, dateStr, className) {
+      const formattedDate = formatVnDate(dateStr);
+      const teacher = state.settings.teacherName || 'Thầy/Cô';
+      const phone = state.settings.phone || '';
+      const classLabel = (!className || className === 'all') ? 'Các lớp' : className;
+
+      let msg = `[THÔNG BÁO HỌC SINH VẮNG HỌC]\n`;
+      msg += `📅 Ngày: ${formattedDate}\n`;
+      msg += `🏫 Lớp: ${classLabel}\n`;
+      msg += `👨‍🏫 Giáo viên: ${teacher}${phone ? ' (' + phone + ')' : ''}\n\n`;
+      msg += `Danh sách các em vắng hôm nay (${students.length} em):\n`;
+      students.forEach((s, idx) => {
+        msg += `${idx + 1}. ${s.name} ${(!className || className === 'all') ? '(' + s.class + ')' : ''}\n`;
+      });
+      msg += `\nKính mong quý phụ huynh nhắc nhở các em mượn vở bạn ghi bài và hoàn thành bài tập đầy đủ. Trân trọng!`;
+      return msg;
+    }
+
+    function openAttendanceModal(targetClass = null) {
+      if (!state.attendanceDate) {
+        state.attendanceDate = getTodayIsoString();
+      }
+      document.getElementById('attendanceDateInput').value = state.attendanceDate;
+
+      // Populate classes dropdown
+      const classes = getClasses();
+      const selectEl = document.getElementById('attendanceClassSelect');
+      selectEl.innerHTML = `
+        <option value="all">Tất cả các lớp (${state.students.length} HS)</option>
+        ${classes.map(c => {
+          const count = state.students.filter(s => s.class === c).length;
+          return `<option value="${c}">${c} (${count} HS)</option>`;
+        }).join('')}
+      `;
+
+      if (targetClass && (targetClass === 'all' || classes.includes(targetClass))) {
+        state.attendanceClass = targetClass;
+      } else if (!state.attendanceClass) {
+        state.attendanceClass = state.selectedClass !== 'all' ? state.selectedClass : 'all';
+      }
+      selectEl.value = state.attendanceClass;
+
+      // Load existing attendance for this date from state.attendance
+      const savedForDate = state.attendance[state.attendanceDate] || [];
+      state.attendanceSelectedIds = new Set(savedForDate);
+
+      state.attendanceSearchQuery = '';
+      document.getElementById('attendanceSearchInput').value = '';
+
+      renderAttendanceStudentList();
+      openModal('modalAttendance');
+    }
+
+    function renderAttendanceStudentList() {
+      const container = document.getElementById('attendanceStudentList');
+      const countBadge = document.getElementById('attendanceCountBadge');
+      const cls = state.attendanceClass;
+      const q = (state.attendanceSearchQuery || '').toLowerCase().trim();
+
+      let filtered = state.students.filter(s => {
+        if (cls !== 'all' && s.class !== cls) return false;
+        if (q) {
+          const matchName = (s.name || '').toLowerCase().includes(q);
+          const matchPhone = (s.phone || '').includes(q);
+          const matchClass = (s.class || '').toLowerCase().includes(q);
+          if (!matchName && !matchPhone && !matchClass) return false;
+        }
+        return true;
+      });
+
+      // Update count badge
+      const selectedCount = state.attendanceSelectedIds.size;
+      countBadge.textContent = `Đã chọn vắng: ${selectedCount} học sinh`;
+      if (selectedCount > 0) {
+        countBadge.className = 'text-[11px] font-bold text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200';
+      } else {
+        countBadge.className = 'text-[11px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200';
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-slate-400 text-xs">
+            Không tìm thấy học sinh nào trong lớp này.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(student => {
+        const isAbsent = state.attendanceSelectedIds.has(student.id);
+        const avatarBg = getAvatarColor(student.name);
+        const initials = getInitials(student.name);
+
+        return `
+          <div 
+            data-attendance-id="${student.id}"
+            class="attendance-student-row flex items-center justify-between p-2.5 rounded-2xl cursor-pointer transition border select-none ${
+              isAbsent 
+                ? 'bg-rose-50/70 border-rose-200 text-rose-900 shadow-sm' 
+                : 'bg-white hover:bg-slate-50 border-slate-200/80 text-slate-700'
+            }"
+          >
+            <div class="flex items-center space-x-3 min-w-0">
+              <input 
+                type="checkbox" 
+                class="attendance-checkbox w-4 h-4 rounded text-rose-600 focus:ring-rose-500 border-slate-300 pointer-events-none"
+                ${isAbsent ? 'checked' : ''}
+              />
+              <div class="w-8 h-8 rounded-xl bg-gradient-to-tr ${avatarBg} text-white font-bold text-[11px] flex items-center justify-center shrink-0">
+                ${initials}
+              </div>
+              <div class="min-w-0">
+                <p class="text-xs font-bold truncate">${student.name}</p>
+                <p class="text-[10px] text-slate-500 truncate flex items-center gap-1">
+                  <span>${student.class}</span>
+                  <span>•</span>
+                  <span>${student.phone ? `SĐT: ${student.phone}` : '<span class="text-amber-500 italic">Chưa có SĐT</span>'}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="shrink-0 ml-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                isAbsent 
+                  ? 'bg-rose-600 text-white' 
+                  : 'bg-slate-100 text-slate-500'
+              }">
+                ${isAbsent ? 'Vắng mặt' : 'Có mặt'}
+              </span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Add click handlers on rows
+      container.querySelectorAll('.attendance-student-row').forEach(row => {
+        row.onclick = () => {
+          const id = row.getAttribute('data-attendance-id');
+          if (state.attendanceSelectedIds.has(id)) {
+            state.attendanceSelectedIds.delete(id);
+          } else {
+            state.attendanceSelectedIds.add(id);
+          }
+          saveCurrentAttendance(false);
+          renderAttendanceStudentList();
+        };
+      });
+    }
+
+    function saveCurrentAttendance(notify = true) {
+      if (!state.attendanceDate) return;
+      const ids = Array.from(state.attendanceSelectedIds);
+      if (ids.length > 0) {
+        state.attendance[state.attendanceDate] = ids;
+      } else {
+        delete state.attendance[state.attendanceDate];
+      }
+      saveData();
+      if (notify) {
+        showToast(`Đã lưu điểm danh ngày ${formatVnDate(state.attendanceDate)}: ${ids.length} học sinh vắng!`, 'success');
+      }
+    }
+
+    function openAbsentZaloQueueModal() {
+      if (state.attendanceSelectedIds.size === 0) {
+        alert('Vui lòng tích chọn ít nhất 1 học sinh vắng để gửi thông báo Zalo!');
+        return;
+      }
+      saveCurrentAttendance(false);
+
+      const dateStr = state.attendanceDate;
+      const selectedStudents = state.students.filter(s => state.attendanceSelectedIds.has(s.id));
+      
+      document.getElementById('absentQueueHeaderTitle').textContent = `Gửi Zalo phụ huynh (${selectedStudents.length} học sinh vắng)`;
+      document.getElementById('absentQueueSubTitle').textContent = `Ngày: ${formatVnDate(dateStr)} • Lớp: ${state.attendanceClass === 'all' ? 'Tất cả các lớp' : state.attendanceClass}`;
+
+      closeModal('modalAttendance');
+      renderAbsentZaloQueue();
+      openModal('modalAbsentZaloQueue');
+    }
+
+    function renderAbsentZaloQueue() {
+      const container = document.getElementById('absentQueueList');
+      const progressText = document.getElementById('absentQueueProgressText');
+      const nextBtnLabel = document.getElementById('btnSendNextAbsentZaloLabel');
+
+      const selectedStudents = state.students.filter(s => state.attendanceSelectedIds.has(s.id));
+      const total = selectedStudents.length;
+      let sentCount = 0;
+      selectedStudents.forEach(s => {
+        if (state.absentSentMap[s.id]) sentCount++;
+      });
+
+      progressText.textContent = `Tiến độ gửi: ${sentCount}/${total} phụ huynh`;
+      
+      const nextUnsent = selectedStudents.find(s => !state.absentSentMap[s.id]);
+      if (nextUnsent) {
+        nextBtnLabel.textContent = `🚀 Gửi tiếp cho PH em ${nextUnsent.name} (${sentCount}/${total})`;
+      } else {
+        nextBtnLabel.textContent = `✓ Đã gửi tất cả (${total}/${total}) phụ huynh`;
+      }
+
+      container.innerHTML = selectedStudents.map(student => {
+        const isSent = !!state.absentSentMap[student.id];
+        const avatarBg = getAvatarColor(student.name);
+        const initials = getInitials(student.name);
+        const previewMsg = buildAbsentMessage(student, state.attendanceDate);
+
+        return `
+          <div class="bg-white rounded-2xl p-3 shadow-sm border ${isSent ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-200/80'} space-y-2">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-center space-x-2.5 min-w-0">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr ${avatarBg} text-white font-bold text-xs flex items-center justify-center shrink-0">
+                  ${initials}
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-xs font-bold text-slate-800 truncate">${student.name}</span>
+                    <span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-medium">${student.class}</span>
+                  </div>
+                  <p class="text-[11px] text-slate-500 mt-0.5">
+                    ${student.phone ? `📱 SĐT Zalo: <span class="font-bold text-slate-700">${student.phone}</span>` : '<span class="text-rose-500 font-bold">⚠️ Chưa có SĐT</span>'}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Sent status badge -->
+              <div class="shrink-0">
+                ${isSent 
+                  ? '<span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">✓ Đã gửi</span>'
+                  : '<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">Chưa gửi</span>'
+                }
+              </div>
+            </div>
+
+            <!-- Message Preview Box -->
+            <div class="bg-slate-50 p-2 rounded-xl text-[11px] text-slate-600 border border-slate-100 italic leading-relaxed">
+              "${previewMsg}"
+            </div>
+
+            <!-- Actions for this student -->
+            <div class="flex items-center justify-between pt-1 text-xs">
+              <button 
+                data-copy-student-msg="${student.id}"
+                type="button" 
+                class="text-[11px] text-indigo-600 font-semibold hover:underline flex items-center gap-1"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                <span>Chép tin nhắn</span>
+              </button>
+
+              <button 
+                data-send-student-zalo="${student.id}"
+                type="button" 
+                class="px-3 py-1.5 ${isSent ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-[#0068ff] hover:bg-[#0055d4] text-white shadow-sm shadow-blue-200'} font-bold text-[11px] rounded-xl flex items-center gap-1 transition active:scale-95"
+              >
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 48 48"><path d="M24 4C12.95 4 4 12.5 4 23c0 5.86 2.82 11.12 7.29 14.63-.4 3.01-1.6 7.4-1.68 7.69-.16.59.34 1.12.89.92 3.86-1.4 8.74-3.47 11.33-4.59 1.13.23 2.3.35 3.5.35 11.05 0 20-8.5 20-19S35.05 4 24 4z"/></svg>
+                <span>${isSent ? 'Gửi lại Zalo' : 'Gửi Zalo'}</span>
+              </button>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      // Bind buttons inside queue
+      container.querySelectorAll('[data-send-student-zalo]').forEach(btn => {
+        btn.onclick = () => {
+          const sid = btn.getAttribute('data-send-student-zalo');
+          sendAbsentZaloToStudent(sid);
+        };
+      });
+
+      container.querySelectorAll('[data-copy-student-msg]').forEach(btn => {
+        btn.onclick = () => {
+          const sid = btn.getAttribute('data-copy-student-msg');
+          const st = state.students.find(s => s.id === sid);
+          if (st) {
+            const msg = buildAbsentMessage(st, state.attendanceDate);
+            navigator.clipboard.writeText(msg).then(() => {
+              showToast(`Đã sao chép tin nhắn cho em ${st.name}!`);
+            });
+          }
+        };
+      });
+    }
+
+    function sendAbsentZaloToStudent(studentId) {
+      const student = state.students.find(s => s.id === studentId);
+      if (!student) return;
+
+      const msg = buildAbsentMessage(student, state.attendanceDate);
+      navigator.clipboard.writeText(msg).catch(() => {});
+
+      state.absentSentMap[studentId] = true;
+      renderAbsentZaloQueue();
+
+      if (!student.phone) {
+        showToast(`Đã chép tin nhắn em ${student.name}! Hãy dán vào Zalo phụ huynh.`, 'info');
+        setTimeout(() => {
+          window.location.href = 'https://zalo.me';
+        }, 400);
+        return;
+      }
+
+      let cleanPhone = student.phone.replace(/[^0-9]/g, '');
+      if (cleanPhone.startsWith('84') && cleanPhone.length >= 10) {
+        cleanPhone = '0' + cleanPhone.slice(2);
+      }
+
+      showToast(`Đã chép tin nhắn! Đang mở Zalo gửi cho phụ huynh em ${student.name}...`, 'success');
+      setTimeout(() => {
+        window.location.href = `https://zalo.me/${cleanPhone}`;
+      }, 300);
+    }
+
+    function sendNextAbsentZalo() {
+      const selectedStudents = state.students.filter(s => state.attendanceSelectedIds.has(s.id));
+      const nextUnsent = selectedStudents.find(s => !state.absentSentMap[s.id]);
+      if (nextUnsent) {
+        sendAbsentZaloToStudent(nextUnsent.id);
+      } else {
+        showToast('Tất cả phụ huynh trong danh sách đều đã được gửi!', 'success');
+      }
+    }
+
+    function copyClassAbsentSummary() {
+      const selectedStudents = state.students.filter(s => state.attendanceSelectedIds.has(s.id));
+      if (selectedStudents.length === 0) {
+        alert('Chưa có học sinh nào được chọn vắng!');
+        return;
+      }
+
+      const msg = buildClassGroupAbsentSummary(selectedStudents, state.attendanceDate, state.attendanceClass);
+      navigator.clipboard.writeText(msg).then(() => {
+        showToast(`Đã sao chép thông báo vắng (${selectedStudents.length} em)! Hãy mở nhóm Zalo lớp để Dán (Paste).`, 'success');
+      }).catch(() => {
+        alert(msg);
+      });
+    }
+
     // --- EVENT LISTENERS BINDING ---
     function setupEventListeners() {
       // Month navigation
@@ -3017,10 +3666,43 @@
         state.settings.bankCode = document.getElementById('settingBankCode').value;
         state.settings.bankAcc = document.getElementById('settingBankAcc').value.trim();
         state.settings.bankOwner = document.getElementById('settingBankOwner').value.trim();
+        
+        const tplInput = document.getElementById('settingAbsentTemplate');
+        if (tplInput) {
+          state.settings.absentMsgTemplate = tplInput.value.trim() || DEFAULT_ABSENT_MSG_TEMPLATE;
+        }
+
         saveData();
         renderHeader();
+        updateAbsentTemplatePreview();
         showToast('Đã lưu thông tin cài đặt thành công!');
       };
+
+      const btnSaveTpl = document.getElementById('btnSaveAbsentTemplate');
+      if (btnSaveTpl) {
+        btnSaveTpl.onclick = () => {
+          const tplInput = document.getElementById('settingAbsentTemplate');
+          state.settings.absentMsgTemplate = (tplInput ? tplInput.value.trim() : '') || DEFAULT_ABSENT_MSG_TEMPLATE;
+          saveData();
+          updateAbsentTemplatePreview();
+          showToast('Đã lưu mẫu tin nhắn Zalo báo vắng!');
+        };
+      }
+
+      const btnResetTpl = document.getElementById('btnResetAbsentTemplate');
+      if (btnResetTpl) {
+        btnResetTpl.onclick = () => {
+          const tplInput = document.getElementById('settingAbsentTemplate');
+          if (tplInput) tplInput.value = DEFAULT_ABSENT_MSG_TEMPLATE;
+          updateAbsentTemplatePreview();
+          showToast('Đã khôi phục mẫu tin nhắn chuẩn');
+        };
+      }
+
+      const tplInputEl = document.getElementById('settingAbsentTemplate');
+      if (tplInputEl) {
+        tplInputEl.oninput = updateAbsentTemplatePreview;
+      }
 
       // Export / Backup Actions
       document.getElementById('btnQuickExportMonth').onclick = exportMonthToCSV;
@@ -3081,6 +3763,106 @@
       // Receipt Image Modal Actions
       document.getElementById('btnShareReceiptZalo').onclick = shareReceiptZalo;
       document.getElementById('btnDownloadReceiptImg').onclick = downloadReceiptImage;
+
+      // Attendance & Absent Zalo Event Listeners
+      const btnOpenAttendanceBanner = document.getElementById('btnOpenAttendanceBanner');
+      if (btnOpenAttendanceBanner) {
+        btnOpenAttendanceBanner.onclick = () => openAttendanceModal();
+      }
+
+      const btnOpenFromStudents = document.getElementById('btnOpenAttendanceFromStudents');
+      if (btnOpenFromStudents) {
+        btnOpenFromStudents.onclick = () => openAttendanceModal();
+      }
+
+      const attDateInput = document.getElementById('attendanceDateInput');
+      if (attDateInput) {
+        attDateInput.onchange = (e) => {
+          state.attendanceDate = e.target.value;
+          state.attendanceSelectedIds = new Set(state.attendance[state.attendanceDate] || []);
+          renderAttendanceStudentList();
+        };
+      }
+
+      const attClassSelect = document.getElementById('attendanceClassSelect');
+      if (attClassSelect) {
+        attClassSelect.onchange = (e) => {
+          state.attendanceClass = e.target.value;
+          renderAttendanceStudentList();
+        };
+      }
+
+      const attSearchInput = document.getElementById('attendanceSearchInput');
+      if (attSearchInput) {
+        attSearchInput.oninput = (e) => {
+          state.attendanceSearchQuery = e.target.value;
+          renderAttendanceStudentList();
+        };
+      }
+
+      const btnAttSelectAll = document.getElementById('btnAttendanceSelectAll');
+      if (btnAttSelectAll) {
+        btnAttSelectAll.onclick = () => {
+          const cls = state.attendanceClass;
+          const q = (state.attendanceSearchQuery || '').toLowerCase().trim();
+          state.students.forEach(s => {
+            if (cls !== 'all' && s.class !== cls) return;
+            if (q) {
+              const matchName = (s.name || '').toLowerCase().includes(q);
+              const matchPhone = (s.phone || '').includes(q);
+              if (!matchName && !matchPhone) return;
+            }
+            state.attendanceSelectedIds.add(s.id);
+          });
+          saveCurrentAttendance(false);
+          renderAttendanceStudentList();
+        };
+      }
+
+      const btnAttDeselectAll = document.getElementById('btnAttendanceDeselectAll');
+      if (btnAttDeselectAll) {
+        btnAttDeselectAll.onclick = () => {
+          state.attendanceSelectedIds.clear();
+          saveCurrentAttendance(false);
+          renderAttendanceStudentList();
+        };
+      }
+
+      const btnSaveAttOnly = document.getElementById('btnSaveAttendanceOnly');
+      if (btnSaveAttOnly) {
+        btnSaveAttOnly.onclick = () => {
+          saveCurrentAttendance(true);
+          closeModal('modalAttendance');
+        };
+      }
+
+      const btnStartSendAbsent = document.getElementById('btnStartSendAbsentZalo');
+      if (btnStartSendAbsent) {
+        btnStartSendAbsent.onclick = openAbsentZaloQueueModal;
+      }
+
+      const btnCopyClassSummary = document.getElementById('btnCopyClassAbsentSummary');
+      if (btnCopyClassSummary) {
+        btnCopyClassSummary.onclick = copyClassAbsentSummary;
+      }
+
+      const btnQueueCopyGroup = document.getElementById('btnQueueCopyGroup');
+      if (btnQueueCopyGroup) {
+        btnQueueCopyGroup.onclick = copyClassAbsentSummary;
+      }
+
+      const btnSendNextAbsent = document.getElementById('btnSendNextAbsentZalo');
+      if (btnSendNextAbsent) {
+        btnSendNextAbsent.onclick = sendNextAbsentZalo;
+      }
+
+      const btnBackToAttendance = document.getElementById('btnBackToAttendance');
+      if (btnBackToAttendance) {
+        btnBackToAttendance.onclick = () => {
+          closeModal('modalAbsentZaloQueue');
+          openModal('modalAttendance');
+        };
+      }
 
       // Radio FeeType switch in student form
       document.querySelectorAll('input[name="formStudentFeeType"]').forEach(r => {

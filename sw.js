@@ -1,4 +1,4 @@
-const CACHE_NAME = 'edufree-v6';
+const CACHE_NAME = 'edufree-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -26,20 +26,45 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// Stale-While-Revalidate Strategy for instantaneous page loading without freezes
 self.addEventListener('fetch', (event) => {
-  // If fetching local files, try network first, fallback to cache
   if (event.request.method !== 'GET') return;
-  event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return networkResponse;
+
+  const requestUrl = new URL(event.request.url);
+
+  // For same-origin assets (index.html, manifest, icon): instant cache return, background revalidate
+  if (requestUrl.origin === self.location.origin) {
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        const fetchPromise = fetch(event.request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return networkResponse;
+        }).catch(() => cachedResponse);
+
+        // If cached asset exists, return instantly (0ms) so mobile reload is lightning-fast
+        return cachedResponse || fetchPromise;
       })
-      .catch(() => caches.match(event.request))
-  );
+    );
+  } else {
+    // For external CDNs (Tailwind CDN, fonts): cache-first with network fallback
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) return cachedResponse;
+        return fetch(event.request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return networkResponse;
+        }).catch(() => null);
+      })
+    );
+  }
 });

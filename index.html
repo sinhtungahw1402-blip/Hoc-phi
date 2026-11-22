@@ -174,8 +174,8 @@
       </div>
 
       <!-- Quick Attendance & Zalo Action Banner -->
-      <div class="flex items-center justify-between bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl p-3 text-white shadow-sm shadow-amber-200">
-        <div class="flex items-center space-x-2.5 min-w-0">
+      <div id="bannerAttendanceAction" class="cursor-pointer flex items-center justify-between bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl p-3 text-white shadow-sm shadow-amber-200 active:scale-[0.99] transition hover:brightness-105 select-none" title="Bấm để mở điểm danh học sinh vắng">
+        <div class="flex items-center space-x-2.5 min-w-0 pointer-events-none">
           <div class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
@@ -186,7 +186,7 @@
             <p class="text-[10px] text-amber-100 opacity-95 truncate">Chọn ngày, lớp & gửi Zalo cho phụ huynh</p>
           </div>
         </div>
-        <button id="btnOpenAttendanceBanner" class="px-3 py-1.5 bg-white hover:bg-amber-50 active:scale-95 text-amber-800 font-bold text-xs rounded-xl shadow-sm transition shrink-0 flex items-center gap-1 ml-2">
+        <button id="btnOpenAttendanceBanner" type="button" class="px-3 py-1.5 bg-white hover:bg-amber-50 active:scale-95 text-amber-800 font-bold text-xs rounded-xl shadow-sm transition shrink-0 flex items-center gap-1 ml-2">
           <span>Điểm danh</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -1426,10 +1426,19 @@
     function renderAll() {
       try { renderHeader(); } catch (e) { console.error('renderHeader error:', e); }
       try { renderClassChips(); } catch (e) { console.error('renderClassChips error:', e); }
-      try { renderFeesView(); } catch (e) { console.error('renderFeesView error:', e); }
-      try { renderStudentsView(); } catch (e) { console.error('renderStudentsView error:', e); }
-      try { renderReportsView(); } catch (e) { console.error('renderReportsView error:', e); }
-      try { renderSettingsView(); } catch (e) { console.error('renderSettingsView error:', e); }
+      
+      // Always render current active view first for instant speed
+      if (state.currentTab === 'fees') {
+        try { renderFeesView(); } catch (e) { console.error('renderFeesView error:', e); }
+      } else if (state.currentTab === 'students') {
+        try { renderStudentsView(); } catch (e) { console.error('renderStudentsView error:', e); }
+      } else if (state.currentTab === 'reports') {
+        try { renderReportsView(); } catch (e) { console.error('renderReportsView error:', e); }
+      } else if (state.currentTab === 'settings') {
+        try { renderSettingsView(); } catch (e) { console.error('renderSettingsView error:', e); }
+      } else {
+        try { renderFeesView(); } catch (e) { console.error('renderFeesView error:', e); }
+      }
     }
 
     function renderHeader() {
@@ -3155,6 +3164,20 @@
       URL.revokeObjectURL(url);
     }
 
+    function openModal(modalId) {
+      const el = document.getElementById(modalId);
+      if (el) {
+        el.classList.remove('hidden');
+      }
+    }
+
+    function closeModal(modalId) {
+      const el = document.getElementById(modalId);
+      if (el) {
+        el.classList.add('hidden');
+      }
+    }
+
     function closeModals() {
       document.querySelectorAll('.modal-backdrop').forEach(modal => {
         modal.classList.add('hidden');
@@ -3212,38 +3235,48 @@
     }
 
     function openAttendanceModal(targetClass = null) {
-      if (!state.attendanceDate) {
-        state.attendanceDate = getTodayIsoString();
+      try {
+        if (!state.attendanceDate) {
+          state.attendanceDate = getTodayIsoString();
+        }
+        const dateInput = document.getElementById('attendanceDateInput');
+        if (dateInput) dateInput.value = state.attendanceDate;
+
+        // Populate classes dropdown
+        const classes = getClasses();
+        const selectEl = document.getElementById('attendanceClassSelect');
+        if (selectEl) {
+          selectEl.innerHTML = `
+            <option value="all">Tất cả các lớp (${state.students.length} HS)</option>
+            ${classes.map(c => {
+              const count = state.students.filter(s => s.class === c).length;
+              return `<option value="${c}">${c} (${count} HS)</option>`;
+            }).join('')}
+          `;
+
+          if (targetClass && (targetClass === 'all' || classes.includes(targetClass))) {
+            state.attendanceClass = targetClass;
+          } else if (!state.attendanceClass) {
+            state.attendanceClass = state.selectedClass !== 'all' ? state.selectedClass : 'all';
+          }
+          selectEl.value = state.attendanceClass;
+        }
+
+        // Load existing attendance for this date from state.attendance
+        const savedForDate = (state.attendance && state.attendance[state.attendanceDate]) || [];
+        state.attendanceSelectedIds = new Set(savedForDate);
+
+        state.attendanceSearchQuery = '';
+        const searchInput = document.getElementById('attendanceSearchInput');
+        if (searchInput) searchInput.value = '';
+
+        renderAttendanceStudentList();
+        openModal('modalAttendance');
+      } catch (err) {
+        console.error('Lỗi mở modal điểm danh:', err);
+        const modal = document.getElementById('modalAttendance');
+        if (modal) modal.classList.remove('hidden');
       }
-      document.getElementById('attendanceDateInput').value = state.attendanceDate;
-
-      // Populate classes dropdown
-      const classes = getClasses();
-      const selectEl = document.getElementById('attendanceClassSelect');
-      selectEl.innerHTML = `
-        <option value="all">Tất cả các lớp (${state.students.length} HS)</option>
-        ${classes.map(c => {
-          const count = state.students.filter(s => s.class === c).length;
-          return `<option value="${c}">${c} (${count} HS)</option>`;
-        }).join('')}
-      `;
-
-      if (targetClass && (targetClass === 'all' || classes.includes(targetClass))) {
-        state.attendanceClass = targetClass;
-      } else if (!state.attendanceClass) {
-        state.attendanceClass = state.selectedClass !== 'all' ? state.selectedClass : 'all';
-      }
-      selectEl.value = state.attendanceClass;
-
-      // Load existing attendance for this date from state.attendance
-      const savedForDate = state.attendance[state.attendanceDate] || [];
-      state.attendanceSelectedIds = new Set(savedForDate);
-
-      state.attendanceSearchQuery = '';
-      document.getElementById('attendanceSearchInput').value = '';
-
-      renderAttendanceStudentList();
-      openModal('modalAttendance');
     }
 
     function renderAttendanceStudentList() {
@@ -3765,9 +3798,17 @@
       document.getElementById('btnDownloadReceiptImg').onclick = downloadReceiptImage;
 
       // Attendance & Absent Zalo Event Listeners
+      const bannerAttendance = document.getElementById('bannerAttendanceAction');
+      if (bannerAttendance) {
+        bannerAttendance.onclick = () => openAttendanceModal();
+      }
+
       const btnOpenAttendanceBanner = document.getElementById('btnOpenAttendanceBanner');
       if (btnOpenAttendanceBanner) {
-        btnOpenAttendanceBanner.onclick = () => openAttendanceModal();
+        btnOpenAttendanceBanner.onclick = (e) => {
+          e.stopPropagation();
+          openAttendanceModal();
+        };
       }
 
       const btnOpenFromStudents = document.getElementById('btnOpenAttendanceFromStudents');
